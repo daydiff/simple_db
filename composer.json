@@ -1,0 +1,25 @@
+{
+    "name": "Daydiff/SimpleDb",
+    "description": "A simple database class using PDO under the hood",
+    "keywords": [
+        "daydiff",
+        "database"
+    ],
+    "homepage": "https://github.com/daydiff/simple_db",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Aleksandr Tabakov",
+            "email": "alex.daymon@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Daydiff\\SimpleDb\\": "src"
+        }
+    }
+}
