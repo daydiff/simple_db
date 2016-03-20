@@ -6,7 +6,13 @@ It's a very simple but handy and high level database wrapper on PDO. Usefull for
 
 ## Install
 
-Via git
+Recommended way
+
+``` bash
+$ composer require daydiff/simple-db
+```
+
+Alternate way
 
 ``` bash
 $ git clone https://github.com/daydiff/simple_db
