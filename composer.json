@@ -1,7 +1,6 @@
 {
     "name": "Daydiff/SimpleDb",
     "description": "A simple database class using PDO under the hood",
-    "version": "dev-master",
     "keywords": [
         "daydiff",
         "database"
