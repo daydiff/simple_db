@@ -124,7 +124,7 @@ class Db
         $items = [];
 
         try {
-            while ($column = $sth->fetchColumn()) {
+            while (false !== ($column = $sth->fetchColumn())) {
                 $items[] = $column;
             }
             $this->error = null;
