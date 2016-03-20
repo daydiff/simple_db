@@ -1,5 +1,5 @@
 {
-    "name": "Daydiff/SimpleDb",
+    "name": "daydiff/simple-db",
     "description": "A simple database class using PDO under the hood",
     "keywords": [
         "daydiff",
