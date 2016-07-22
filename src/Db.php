@@ -16,7 +16,6 @@ class Db
     private $password;
     private $options;
     private $connection;
-    private $error;
 
     public function __construct($dsn, $user, $password, $options = [])
     {
@@ -53,15 +52,7 @@ class Db
         $sth = $this->connection()->prepare($query);
         $sth->execute($params);
 
-        try {
-            $scalar = $sth->fetchColumn();
-            $this->error = null;
-        } catch (\Exception $e) {
-            $this->error = $e->getMessage();
-            return null;
-        }
-
-        return $scalar;
+        return $sth->fetchColumn();
     }
 
     /**
@@ -76,15 +67,7 @@ class Db
         $sth = $this->connection()->prepare($query);
         $sth->execute($params);
 
-        try {
-            $item = $sth->fetch(\PDO::FETCH_ASSOC);
-            $this->error = null;
-        } catch (\Exception $e) {
-            $this->error = $e->getMessage();
-            return null;
-        }
-
-        return $item;
+        return $sth->fetch(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -99,15 +82,7 @@ class Db
         $sth = $this->connection()->prepare($query);
         $sth->execute($params);
 
-        try {
-            $items = $sth->fetchAll(\PDO::FETCH_ASSOC);
-            $this->error = null;
-        } catch (\Exception $e) {
-            $this->error = $e->getMessage();
-            return [];
-        }
-
-        return $items;
+        return $sth->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -123,14 +98,8 @@ class Db
         $sth->execute($params);
         $items = [];
 
-        try {
-            while (false !== ($column = $sth->fetchColumn())) {
-                $items[] = $column;
-            }
-            $this->error = null;
-        } catch (\Exception $e) {
-            $this->error = $e->getMessage();
-            return [];
+        while (false !== ($column = $sth->fetchColumn())) {
+            $items[] = $column;
         }
 
         return $items;
@@ -160,15 +129,7 @@ class Db
     public function exec($query, $params = [])
     {
         $sth = $this->connection()->prepare($query);
-
-        try {
-            $sth->execute($params);
-            $this->error = null;
-        } catch (\Exception $e) {
-            $this->error = $e->getMessage();
-            return null;
-        }
-
+        $sth->execute($params);
         $count = $sth->rowCount();
 
         return $count;
@@ -195,13 +156,4 @@ class Db
         return $this->connection()->quote($param);
     }
 
-    /**
-     * Returns an error if it occured in the last query
-     *
-     * @return string
-     */
-    public function error()
-    {
-        return $this->error;
-    }
 }
