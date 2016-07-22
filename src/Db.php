@@ -11,33 +11,12 @@ class Db
 {
     const DEFAULT_CHARSET = 'utf8';
 
-    private $dsn;
-    private $user;
-    private $password;
-    private $options;
     private $connection;
 
     public function __construct($dsn, $user, $password, $options = [])
     {
-        $this->dsn = $dsn;
-        $this->user = $user;
-        $this->password = $password;
-        $this->options = $options;
-    }
-
-    /**
-     * Returns the connection to the database
-     *
-     * @return \PDO
-     */
-    public function connection()
-    {
-        if ($this->connection == null) {
-            $this->connection = new \PDO($this->dsn, $this->user, $this->password, $this->options);
-            $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        }
-
-        return $this->connection;
+        $this->connection = new \PDO($dsn, $user, $password, $options);
+        $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
     /**
@@ -49,7 +28,7 @@ class Db
      */
     public function scalar($query, $params = [])
     {
-        $sth = $this->connection()->prepare($query);
+        $sth = $this->connection->prepare($query);
         $sth->execute($params);
 
         return $sth->fetchColumn();
@@ -64,7 +43,7 @@ class Db
      */
     public function one($query, $params = [])
     {
-        $sth = $this->connection()->prepare($query);
+        $sth = $this->connection->prepare($query);
         $sth->execute($params);
 
         return $sth->fetch(\PDO::FETCH_ASSOC);
@@ -79,7 +58,7 @@ class Db
      */
     public function all($query, $params = [])
     {
-        $sth = $this->connection()->prepare($query);
+        $sth = $this->connection->prepare($query);
         $sth->execute($params);
 
         return $sth->fetchAll(\PDO::FETCH_ASSOC);
@@ -94,7 +73,7 @@ class Db
      */
     public function column($query, $params = [])
     {
-        $sth = $this->connection()->prepare($query);
+        $sth = $this->connection->prepare($query);
         $sth->execute($params);
         $items = [];
 
@@ -114,7 +93,7 @@ class Db
      */
     public function query($query, $params = [])
     {
-        $sth = $this->connection()->prepare($query);
+        $sth = $this->connection->prepare($query);
         $sth->execute($params);
         return $sth;
     }
@@ -128,7 +107,7 @@ class Db
      */
     public function exec($query, $params = [])
     {
-        $sth = $this->connection()->prepare($query);
+        $sth = $this->connection->prepare($query);
         $sth->execute($params);
         $count = $sth->rowCount();
 
@@ -142,7 +121,7 @@ class Db
      */
     public function insertedId()
     {
-        return $this->connection()->lastInsertId();
+        return $this->connection->lastInsertId();
     }
 
     /**
@@ -153,7 +132,7 @@ class Db
      */
     public function quote($param)
     {
-        return $this->connection()->quote($param);
+        return $this->connection->quote($param);
     }
 
 }
