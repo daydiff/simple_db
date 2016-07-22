@@ -9,8 +9,6 @@ namespace Daydiff\SimpleDb;
  */
 class Db
 {
-    const DEFAULT_CHARSET = 'utf8';
-
     private $connection;
 
     public function __construct($dsn, $user, $password, $options = [])
