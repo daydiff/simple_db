@@ -9,12 +9,27 @@ namespace Daydiff\SimpleDb;
  */
 class Db
 {
+    /**
+     * @var \PDO
+     */
     private $connection;
 
+    /**
+     * Creates Db insatance
+     *
+     * @param string $dsn DSN in the format "mysql:host=localhost;dbname=test;port=3306;charset=utf8"
+     * @param string $user
+     * @param string $password
+     * @param array $options
+     */
     public function __construct($dsn, $user, $password, $options = [])
     {
+        $default = [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ];
+        $options = array_merge($default, $options);
         $this->connection = new \PDO($dsn, $user, $password, $options);
-        $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
     /**
@@ -26,10 +41,7 @@ class Db
      */
     public function scalar($query, $params = [])
     {
-        $sth = $this->connection->prepare($query);
-        $sth->execute($params);
-
-        return $sth->fetchColumn();
+        return $this->exec($query, $params)->fetchColumn();
     }
 
     /**
@@ -41,10 +53,7 @@ class Db
      */
     public function one($query, $params = [])
     {
-        $sth = $this->connection->prepare($query);
-        $sth->execute($params);
-
-        return $sth->fetch(\PDO::FETCH_ASSOC);
+        return $this->exec($query, $params)->fetch(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -56,10 +65,7 @@ class Db
      */
     public function all($query, $params = [])
     {
-        $sth = $this->connection->prepare($query);
-        $sth->execute($params);
-
-        return $sth->fetchAll(\PDO::FETCH_ASSOC);
+        return $this->exec($query, $params)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -71,9 +77,7 @@ class Db
      */
     public function column($query, $params = [])
     {
-        $sth = $this->connection->prepare($query);
-        $sth->execute($params);
-        $items = [];
+        $sth = $this->exec($query, $params);
 
         while (false !== ($column = $sth->fetchColumn())) {
             $items[] = $column;
@@ -83,33 +87,17 @@ class Db
     }
 
     /**
-     * Do query and returns resulting PDOStatement object
+     * Executes the query and returns resulting PDOStatement object
      *
      * @param string $query
      * @param array $params
      * @return \PDOStatement
      */
-    public function query($query, $params = [])
-    {
-        $sth = $this->connection->prepare($query);
-        $sth->execute($params);
-        return $sth;
-    }
-
-    /**
-     * Execute a query and returns a count of affected rows
-     *
-     * @param string $query
-     * @param array $params
-     * @return integer|null
-     */
     public function exec($query, $params = [])
     {
         $sth = $this->connection->prepare($query);
         $sth->execute($params);
-        $count = $sth->rowCount();
-
-        return $count;
+        return $sth;
     }
 
     /**
