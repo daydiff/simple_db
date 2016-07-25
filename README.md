@@ -1,5 +1,6 @@
 # A simple Db class - a high level wrapper on PDO
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/daydiff/simple-db.svg?style=flat-square)](https://packagist.org/packages/daydiff/simple-db)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/daydiff/simple_db/master.svg?style=flat-square)](https://travis-ci.org/daydiff/simple_db)
 
