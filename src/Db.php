@@ -25,8 +25,8 @@ class Db
     public function __construct($dsn, $user, $password, $options = [])
     {
         $default = [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
         ];
         $options = array_merge($default, $options);
         $this->connection = new \PDO($dsn, $user, $password, $options);
