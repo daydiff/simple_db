@@ -1,6 +1,7 @@
 # A simple Db class - a high level wrapper on PDO
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![Build Status](https://img.shields.io/travis/daydiff/simple_db/master.svg?style=flat-square)](https://travis-ci.org/daydiff/simple_db)
 
 It's a very simple but handy and high level database wrapper on PDO. Usefull for small scripts and for systems without "normal" database abstraction.
 
