@@ -22,13 +22,13 @@ class Db
      * @param string $password
      * @param array $options
      */
-    public function __construct($dsn, $user, $password, $options = [])
+    public function __construct($dsn, $user = '', $password = '', $options = [])
     {
         $default = [
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
         ];
-        $options = array_merge($default, $options);
+        $options = $options ?: $default;
         $this->connection = new \PDO($dsn, $user, $password, $options);
     }
 
