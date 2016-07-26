@@ -15,7 +15,7 @@ class Db
     private $connection;
 
     /**
-     * Creates Db insatance
+     * Creates Db instance
      *
      * @param string $dsn DSN in the format "mysql:host=localhost;dbname=test;port=3306;charset=utf8"
      * @param string $user
